@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 
@@ -10,7 +11,20 @@ export async function getUserId(): Promise<string | undefined> {
 export async function ensureUserId(): Promise<string> {
   const cookieStore = await cookies();
   const existing = cookieStore.get("user_id")?.value;
-  if (existing) return existing;
+
+  if (existing) {
+    const found = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.id, existing));
+
+    if (found.length > 0) {
+      return existing;
+    }
+
+    await db.insert(users).values({ id: existing, nickname: "학생" });
+    return existing;
+  }
 
   const [user] = await db
     .insert(users)
