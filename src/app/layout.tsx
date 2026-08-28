@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "나만의 문제집",
   },
   icons: {
-    icon: "/icons/icon-192x192.png",
+    icon: "/icon-192x192.png",
     apple: "/apple-touch-icon.png",
   },
   formatDetection: {
