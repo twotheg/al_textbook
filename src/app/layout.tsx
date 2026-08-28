@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SerwistProvider } from "@serwist/turbopack/react";
+import { BottomNav } from "@/components/BottomNav";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,8 +31,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
-      <body className="bg-slate-50 text-slate-900 antialiased">
-        <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+      <body className="bg-slate-50 pb-16 text-slate-900 antialiased md:pb-0">
+        <SerwistProvider swUrl="/serwist/sw.js">
+          {children}
+          <BottomNav />
+          <InstallPrompt />
+        </SerwistProvider>
       </body>
     </html>
   );
